@@ -4671,7 +4671,7 @@ libvirt_virDomainGetJobInfo(PyObject *self ATTRIBUTE_UNUSED,
     if (c_retval < 0)
         return VIR_PY_NONE;
 
-    if ((py_retval = PyList_New(12)) == NULL)
+    if ((py_retval = PyList_New(17)) == NULL)
         return NULL;
 
     VIR_PY_LIST_SET_GOTO(py_retval, 0,
@@ -4698,6 +4698,18 @@ libvirt_virDomainGetJobInfo(PyObject *self ATTRIBUTE_UNUSED,
                          libvirt_ulonglongWrap(info.fileProcessed), error);
     VIR_PY_LIST_SET_GOTO(py_retval, 11,
                          libvirt_ulonglongWrap(info.fileRemaining), error);
+    VIR_PY_LIST_SET_GOTO(py_retval, 12,
+                         libvirt_ulonglongWrap(info.chkptSize), error);
+    VIR_PY_LIST_SET_GOTO(py_retval, 13,
+                         libvirt_ulonglongWrap(info.chkptLength), error);
+    VIR_PY_LIST_SET_GOTO(py_retval, 14,
+                         libvirt_ulonglongWrap(info.chkptPause), error);
+    VIR_PY_LIST_SET_GOTO(py_retval, 15,
+                         libvirt_ulonglongWrap(info.chkptCount), error);
+    VIR_PY_LIST_SET_GOTO(py_retval, 16,
+                         libvirt_ulonglongWrap(info.chkptProxyDiscompare), 
+                          error);
+
 
     return py_retval;
 
