@@ -154,6 +154,27 @@ libvirt_qemu_virDomainQemuMonitorCommand(PyObject *self ATTRIBUTE_UNUSED,
     return py_retval;
 }
 
+static PyObject *
+libvirt_qemu_virDomainColoLostHeartBeatCmd(PyObject *self, 
+                                           PyObject *args) 
+{
+    PyObject *py_retval;
+    int c_retval;
+    virDomainPtr domain;
+    PyObject *pyobj_domain;
+
+    if (!PyArg_ParseTuple(args, (char *)"Oz:virDomainColoLostHeartBeatCmd", 
+                          &pyobj_domain))
+        return NULL;
+    domain = (virDomainPtr) PyvirDomain_Get(pyobj_domain);
+
+    LIBVIRT_BEGIN_ALLOW_THREADS;
+    c_retval = virDomainColoLostHeartBeatCmd(domain);
+    LIBVIRT_END_ALLOW_THREADS;
+    py_retval = libvirt_intWrap((int) c_retval);
+    return py_retval;
+}
+
 #if LIBVIR_CHECK_VERSION(0, 10, 0)
 static PyObject *
 libvirt_qemu_virDomainQemuAgentCommand(PyObject *self ATTRIBUTE_UNUSED,
@@ -340,6 +361,7 @@ libvirt_qemu_virConnectDomainQemuMonitorEventDeregister(PyObject *self ATTRIBUTE
 static PyMethodDef libvirtQemuMethods[] = {
 #include "build/libvirt-qemu-export.c"
     {(char *) "virDomainQemuMonitorCommand", libvirt_qemu_virDomainQemuMonitorCommand, METH_VARARGS, NULL},
+    {(char *) "virDomainColoLostHeartBeatCmd", libvirt_qemu_virDomainColoLostHeartBeatCmd, METH_VARARGS, NULL},
 #if LIBVIR_CHECK_VERSION(0, 10, 0)
     {(char *) "virDomainQemuAgentCommand", libvirt_qemu_virDomainQemuAgentCommand, METH_VARARGS, NULL},
 #endif /* LIBVIR_CHECK_VERSION(0, 10, 0) */
