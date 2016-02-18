@@ -155,11 +155,11 @@ libvirt_qemu_virDomainQemuMonitorCommand(PyObject *self ATTRIBUTE_UNUSED,
 }
 
 static PyObject *
-libvirt_qemu_virDomainColoLostHeartBeatCmd(PyObject *self, 
+libvirt_qemu_virDomainColoLostHeartBeatCmd(PyObject *self ATTRIBUTE_UNUSED, 
                                            PyObject *args) 
 {
     PyObject *py_retval;
-    int c_retval;
+    char *c_retval;
     virDomainPtr domain;
     PyObject *pyobj_domain;
 
@@ -171,7 +171,7 @@ libvirt_qemu_virDomainColoLostHeartBeatCmd(PyObject *self,
     LIBVIRT_BEGIN_ALLOW_THREADS;
     c_retval = virDomainColoLostHeartBeatCmd(domain);
     LIBVIRT_END_ALLOW_THREADS;
-    py_retval = libvirt_intWrap((int) c_retval);
+    py_retval = libvirt_constcharPtrWrap(c_retval);
     return py_retval;
 }
 
