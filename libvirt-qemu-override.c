@@ -163,7 +163,7 @@ libvirt_qemu_virDomainColoLostHeartBeatCmd(PyObject *self ATTRIBUTE_UNUSED,
     virDomainPtr domain;
     PyObject *pyobj_domain;
 
-    if (!PyArg_ParseTuple(args, (char *)"Oz:virDomainColoLostHeartBeatCmd", 
+    if (!PyArg_ParseTuple(args, (char *)"O:virDomainColoLostHeartBeatCmd", 
                           &pyobj_domain))
         return NULL;
     domain = (virDomainPtr) PyvirDomain_Get(pyobj_domain);
